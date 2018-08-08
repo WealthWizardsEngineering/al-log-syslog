@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: al-log-syslog
+  name: al-log-syslog
+spec:
+  template:
+    metadata:
+      labels:
+        app: al-log-syslog
+    spec:
+      containers:
+      - name: al-log-syslog
+        image: quay.io/wealthwizards/al-log-syslog-container:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "0.01"
+          limits:
+            memory: "500Mi"
+            cpu: "1"
+        env:
+          - name: REGISTRATION_KEY
+            value: "your_alert_logic_key_goes_in_here"
+        ports:
+          - containerPort: 1514
+            name: collector-port
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /var/alertlogic/etc/remote_crt.pem
+          initialDelaySeconds: 30
+          periodSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: 1514
+          initialDelaySeconds: 30
+          periodSeconds: 5            
+      restartPolicy: Always
+      tolerations:
+        - operator: "Exists"
