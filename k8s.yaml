@@ -14,8 +14,6 @@ spec:
       - name: al-log-syslog
         image: quay.io/wealthwizards/al-log-syslog:latest
         imagePullPolicy: Always
-        securityContext:
-          privileged: true
         resources:
           requests:
             memory: "100Mi"
