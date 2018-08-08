@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: al-log-syslog
-        image: quay.io/wealthwizards/al-log-syslog-container:latest
+        image: quay.io/wealthwizards/al-log-syslog:latest
         imagePullPolicy: Always
         resources:
           requests:
@@ -32,13 +32,13 @@ spec:
             command:
             - ls
             - /var/alertlogic/etc/remote_crt.pem
-          initialDelaySeconds: 30
-          periodSeconds: 5
+          initialDelaySeconds: 5
+          periodSeconds: 6
         readinessProbe:
           tcpSocket:
             port: 1514
-          initialDelaySeconds: 30
-          periodSeconds: 5            
+          initialDelaySeconds: 5
+          periodSeconds: 6
       restartPolicy: Always
       tolerations:
         - operator: "Exists"
