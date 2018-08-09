@@ -10,6 +10,7 @@ spec:
       labels:
         app: al-log-syslog
     spec:
+      hostNetwork: true
       containers:
       - name: al-log-syslog
         image: quay.io/wealthwizards/al-log-syslog:latest
